@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Text, View } from "react-native";
-import { getDeck, formatTitle } from "../utils/helpers";
+import { formatTitle, getDeck, removeDeck } from "../utils/helpers";
 
 export default class DeckView extends React.Component {
   refresh = () => {
@@ -34,6 +34,15 @@ export default class DeckView extends React.Component {
           onPress={() => {
             this.props.navigation.navigate("QuizView", {
               deck
+            });
+          }}
+        />
+        <Button
+          title="Delete Deck"
+          onPress={() => {
+            removeDeck(formatTitle(deck.title)).then(() => {
+              this.props.navigation.state.params.refreshDeckList();
+              this.props.navigation.navigate("DeckList");
             });
           }}
         />

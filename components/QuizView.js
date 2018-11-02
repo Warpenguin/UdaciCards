@@ -44,7 +44,11 @@ export default class QuizView extends React.Component {
 
   render() {
     const { answeredCards, currentCard, deck, showAnswer } = this.state;
-    return currentCard ? (
+    return deck.questions.length == 0 ? (
+      <View>
+        <Text >Sorry, you cannot take a quiz because there are no cards in the deck.</Text>
+        </View>
+    ) : currentCard ? (
       <View style={{ flex: 1 }}>
         <Text>
           {answeredCards.length + 1} / {deck.questions.length}

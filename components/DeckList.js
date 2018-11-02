@@ -36,7 +36,10 @@ export default class DeckList extends React.Component {
               <Text
                 style={{ fontSize: 16 }}
                 onPress={() => {
-                  this.props.navigation.navigate("DeckView", { deck });
+                  this.props.navigation.navigate("DeckView", {
+                    deck,
+                    refreshDeckList: this.refresh
+                  });
                 }}
               >
                 {deck.title}
