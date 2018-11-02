@@ -1,6 +1,7 @@
 import React from "react";
 import { StatusBar, View } from "react-native";
 import { Constants } from "expo";
+import { getDecks } from "./utils/helpers";
 import MainStack from "./routes/Main";
 
 function EpicStatusBar() {
@@ -16,11 +17,26 @@ function EpicStatusBar() {
 }
 
 export default class App extends React.Component {
+  state = {
+    ready: false,
+    decks: {}
+  };
+
+  refresh = () => {
+    getDecks().then(decks =>
+      this.setState({ decks: decks ? decks : {}, ready: true })
+    );
+  };
+
+  componentDidMount() {
+    this.refresh();
+  }
+
   render() {
     return (
       <View style={{ flex: 1 }}>
         <EpicStatusBar />
-        <MainStack />
+        <MainStack screenProps={{ decks: this.state.decks, refresh: () => this.refresh() }} />
       </View>
     );
   }

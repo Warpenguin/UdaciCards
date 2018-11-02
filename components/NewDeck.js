@@ -17,8 +17,8 @@ export default class NewDeck extends React.Component {
       );
     } else {
       saveDeck(titleFormatted).then(() => {
-        this.props.navigation.state.params.refreshDeckList();
-        this.props.navigation.navigate("DeckList");
+        this.props.screenProps.refresh();
+        this.props.navigation.navigate("Home");
         alert("Deck created successfully!");
       });
     }
@@ -37,7 +37,7 @@ export default class NewDeck extends React.Component {
           onChangeText={text => this.setState({ text })}
         />
         <Button
-          title="Submit"
+          title="Create Deck"
           onPress={() => {
             this.submit();
           }}

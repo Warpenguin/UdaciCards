@@ -4,31 +4,15 @@ import { AppLoading } from "expo";
 import { getDecks } from "../utils/helpers";
 
 export default class DeckList extends React.Component {
-  state = {
-    ready: false,
-    decks: {}
-  };
-
-  refresh = () => {
-    getDecks().then(decks =>
-      this.setState({ decks: decks === undefined ? {} : decks, ready: true })
-    );
-  };
-
-  componentDidMount() {
-    this.refresh();
-  }
-
   render() {
-    const { decks, ready } = this.state;
-
-    if (ready === false) {
+    if (!this.props.screenProps) {
       return <AppLoading />;
     }
 
+    const { decks } = this.props.screenProps;
+
     return (
       <View style={{ flex: 1 }}>
-        <Text>Deck List</Text>
         {Object.keys(decks).map(key => {
           const deck = decks[key];
           return (
@@ -37,8 +21,7 @@ export default class DeckList extends React.Component {
                 style={{ fontSize: 16 }}
                 onPress={() => {
                   this.props.navigation.navigate("DeckView", {
-                    deck,
-                    refreshDeckList: this.refresh
+                    deck
                   });
                 }}
               >
@@ -50,16 +33,6 @@ export default class DeckList extends React.Component {
             </View>
           );
         })}
-        <Button
-          title="New Deck"
-          onPress={() => {
-            this.props.navigation.navigate("NewDeck", {
-              decks,
-              refreshDeckList: this.refresh
-            });
-          }}
-          style={{ position: "absolute", bottom: 0 }}
-        />
       </View>
     );
   }

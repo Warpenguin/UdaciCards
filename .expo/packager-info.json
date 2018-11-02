@@ -1,8 +1,9 @@
 {
   "expoServerPort": 19000,
   "packagerPort": 19001,
-  "packagerPid": 16852,
+  "packagerPid": 10044,
   "expoServerNgrokUrl": "https://wd-vpb.warp.udacicards.exp.direct",
   "packagerNgrokUrl": "https://packager.wd-vpb.warp.udacicards.exp.direct",
-  "ngrokPid": 10324
+  "ngrokPid": 14132,
+  "devToolsPort": 19002
 }

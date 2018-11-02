@@ -6,6 +6,7 @@ export default class DeckView extends React.Component {
   refresh = () => {
     const deck = this.props.navigation.getParam("deck");
     getDeck(formatTitle(deck.title)).then(deck => this.setState({ deck }));
+    this.props.screenProps.refresh();
   };
 
   componentWillMount() {
@@ -41,7 +42,7 @@ export default class DeckView extends React.Component {
           title="Delete Deck"
           onPress={() => {
             removeDeck(formatTitle(deck.title)).then(() => {
-              this.props.navigation.state.params.refreshDeckList();
+              this.props.screenProps.refresh();
               this.props.navigation.navigate("DeckList");
             });
           }}
