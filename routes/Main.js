@@ -9,11 +9,61 @@ import DeckView from "../components/DeckView";
 import NewCard from "../components/NewCard";
 import NewDeck from "../components/NewDeck";
 import QuizView from "../components/QuizView";
+import { alpha } from "../utils/colors";
 
-const HomeStack = createStackNavigator(
+const Tabs = createBottomTabNavigator(
+  {
+    Decks: {
+      screen: DeckList,
+      navigationOptions: {
+        tabBarLabel: "Decks",
+        tabBarIcon: ({ focused, tintColor }) => (
+          <Ionicons
+            name={focused ? "ios-albums" : "ios-albums-outline"}
+            size={25}
+            color={tintColor}
+          />
+        )
+      }
+    },
+    "Add Deck": {
+      screen: NewDeck,
+      navigationOptions: {
+        tabBarLabel: "Add Deck",
+        tabBarIcon: ({ focused, tintColor }) => (
+          <Ionicons
+            name={focused ? "ios-add-circle" : "ios-add-circle-outline"}
+            size={25}
+            color={tintColor}
+          />
+        )
+      }
+    }
+  },
+  {
+    tabBarOptions: {
+      activeTintColor: alpha,
+      inactiveTintColor: "gray"
+    }
+  },
+  {
+    initialRouteName: "Home"
+  }
+);
+
+export default createStackNavigator(
   {
     DeckList: {
-      screen: DeckList
+      screen: Tabs,
+      navigationOptions: {
+        headerStyle: {
+          backgroundColor: alpha
+        },
+        headerTintColor: "#fff",
+        headerTitleStyle: {
+          fontWeight: "bold"
+        }
+      }
     },
     DeckView: {
       screen: DeckView
@@ -27,44 +77,5 @@ const HomeStack = createStackNavigator(
   },
   {
     initialRouteName: "DeckList"
-  }
-);
-
-export default createBottomTabNavigator(
-  {
-    Home: {
-      screen: HomeStack
-    },
-    NewDeck: {
-      screen: NewDeck
-    }
-  },
-  {
-    navigationOptions: ({ navigation }) => ({
-      tabBarIcon: ({ focused, horizontal, tintColor }) => {
-        const { routeName } = navigation.state;
-        let iconName;
-        if (routeName === "Home") {
-          iconName = `ios-albums${focused ? "" : "-outline"}`;
-        } else if (routeName === "NewDeck") {
-          iconName = `ios-add-circle${focused ? "" : "-outline"}`;
-        }
-
-        return (
-          <Ionicons
-            name={iconName}
-            size={horizontal ? 20 : 25}
-            color={tintColor}
-          />
-        );
-      }
-    }),
-    tabBarOptions: {
-      activeTintColor: "indigo",
-      inactiveTintColor: "gray"
-    }
-  },
-  {
-    initialRouteName: "Home"
   }
 );

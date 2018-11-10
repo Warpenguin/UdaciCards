@@ -1,17 +1,15 @@
 import React from "react";
 import { StatusBar, View } from "react-native";
 import { Constants } from "expo";
+import { alpha } from "./utils/colors";
 import { getDecks } from "./utils/helpers";
+import { setLocalNotification } from "./utils/helpers";
 import MainStack from "./routes/Main";
 
-function EpicStatusBar() {
+function EpicStatusBar({ backgroundColor, ...props }) {
   return (
-    <View style={{ height: Constants.statusBarHeight }}>
-      <StatusBar
-        translucent
-        backgroundColor="#293046"
-        barStyle="light-content"
-      />
+    <View style={{ backgroundColor, height: Constants.statusBarHeight }}>
+      <StatusBar translucent backgroundColor={backgroundColor} {...props} />
     </View>
   );
 }
@@ -29,14 +27,20 @@ export default class App extends React.Component {
   };
 
   componentDidMount() {
+    setLocalNotification();
     this.refresh();
   }
 
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <EpicStatusBar />
-        <MainStack screenProps={{ decks: this.state.decks, refresh: () => this.refresh() }} />
+        <EpicStatusBar backgroundColor={alpha} barStyle="light-content" />
+        <MainStack
+          screenProps={{
+            decks: this.state.decks,
+            refresh: () => this.refresh()
+          }}
+        />
       </View>
     );
   }
